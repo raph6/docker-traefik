@@ -6,7 +6,7 @@ Veillez a bien avoir installé Docker et docker-compose
 
 Vous devez configurer votre zone DNS en ajoutant :
 * **traefik**.yourdomain.tld
-* **gitlab**.yourdomain.tld
+* **git**.yourdomain.tld
   
 en pointant vers l'ip de votre serveur
 #### Traefik
@@ -54,4 +54,4 @@ DOMAIN_URL=yourdomain.tld docker-compose up -d
 
 
 ### Informations
-HTTPS est activé par défaut, vos certificats sont générés et renouveler automatiquement
+HTTPS est activé par défaut, vos certificats sont générés et renouvelés automatiquement
