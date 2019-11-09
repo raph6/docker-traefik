@@ -1,0 +1,22 @@
+# Declaring the user list
+http:
+  middlewares:
+    admin-auth:
+      basicAuth:
+        usersFile: "/etc/traefik/basicAuth/.admin"
+
+    # https only
+    https-only:
+      redirectScheme:
+        scheme: https
+        permanent: true
+  
+    default-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true

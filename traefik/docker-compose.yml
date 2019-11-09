@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    image: traefik:v2.0
+    command: 
+      - "--log.level=INFO"
+
+      - "--accesslog=true"
+
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.watch=true"
+
+      - "--global.checknewversion=true"
+      - "--global.sendanonymoususage=false"
+      
+      - "--api.insecure=true"
+      - "--api.debug=true"
+
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"
+
+      - "--providers.file.filename=/etc/traefik/config/middlewares.yml"
+      
+      - "--certificatesresolvers.certbot=true"
+      - "--certificatesresolvers.certbot.acme.email=${EMAIL}"
+      - "--certificatesresolvers.certbot.acme.storage=/etc/traefik/acme/acme.json"
+      - "--certificatesresolvers.certbot.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
+
+      - "--certificatesresolvers.certbot.acme.httpchallenge=true"
+      - "--certificatesresolvers.certbot.acme.httpchallenge.entrypoint=http"
+
+      #- "--certificatesResolvers.certbot.acme.tlsChallenge=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik:/etc/traefik
+    restart: "always"
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+  
+      # routers 
+      - "traefik.http.routers.dashboard.middlewares=admin-auth@file,https-only@file"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN_URL}`)"
+      - "traefik.http.routers.dashboard.entrypoints=https"
+      - "traefik.http.routers.dashboard.tls.certresolver=certbot"
+
+      - "traefik.http.routers.dash-redirect.rule=Host(`traefik.${DOMAIN_URL}`)"
+      - "traefik.http.routers.dash-redirect.entrypoints=http"
+      - "traefik.http.routers.dash-redirect.middlewares=https-only@file"
+
+      # services
+      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+
+networks:
+  proxy:
+    driver: bridge
