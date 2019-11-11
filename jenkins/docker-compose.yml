@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+
+  jenkins:
+    image: jenkins/jenkins:alpine
+    ports:
+      - "50000:50000"
+    restart: "always"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.jenkins.rule=Host(`jenkins.${DOMAIN_URL}`)"
+      - "traefik.http.routers.jenkins.entrypoints=https"
+      - "traefik.http.routers.jenkins.tls.certresolver=certbot"
+      - "traefik.http.routers.jenkins.middlewares=default-headers@file"
+
+      - "traefik.http.routers.jenkins-http.rule=Host(`jenkins.${DOMAIN_URL}`)"
+      - "traefik.http.routers.jenkins-http.entrypoints=http"
+      - "traefik.http.routers.jenkins-http.middlewares=https-only@file"
+
+      - "traefik.http.services.jenkins.loadbalancer.server.port=8080"
+    networks:
+      - traefik
+
+volumes:
+  jenkins_data:
+    driver: local
+
+networks:
+  traefik:
+    external:
+      name: traefik_proxy

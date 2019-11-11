@@ -7,6 +7,7 @@ Veillez a bien avoir installé Docker et docker-compose
 Vous devez configurer votre zone DNS en ajoutant :
 * **traefik**.yourdomain.tld
 * **git**.yourdomain.tld
+* **jenkins**.yourdomain.tld
   
 en pointant vers l'ip de votre serveur
 #### Traefik
@@ -48,6 +49,15 @@ Attention, par défaut Gitlab stockera ses fichiers systèmes dans _/srv/gitlab/
 Vous devez ajouter la variable d'environnement `DOMAIN_URL` avant le docker-compose up -d
 
 Rendez vous dans le dossier de gitlab
+```
+DOMAIN_URL=yourdomain.tld docker-compose up -d
+```
+
+### Lancer Jenkins
+
+Vous devez ajouter la variable d'environnement `DOMAIN_URL` avant le docker-compose up -d
+
+Rendez vous dans le dossier de jenkins
 ```
 DOMAIN_URL=yourdomain.tld docker-compose up -d
 ```
