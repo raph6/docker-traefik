@@ -4,12 +4,8 @@ Veillez a bien avoir installé Docker et docker-compose
 
 #### Zone DNS
 
-Vous devez configurer votre zone DNS en ajoutant :
-* **traefik**.yourdomain.tld
-* **git**.yourdomain.tld
-* **jenkins**.yourdomain.tld
-  
-en pointant vers l'ip de votre serveur
+Vous devez configurer votre zone DNS en pointant vers l'ip de votre serveur
+
 #### Traefik
 
 Rendez vous dans le dossier `traefik`

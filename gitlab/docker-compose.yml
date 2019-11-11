@@ -1,10 +1,10 @@
 version: '3'
 services:
     gitlab:
-      hostname: 'git.${DOMAIN_URL}'
+      hostname: '${GITLAB_URL}'
       environment:
         GITLAB_OMNIBUS_CONFIG: |
-          external_url = 'https://git.${DOMAIN_URL}'
+          external_url = 'https://${GITLAB_URL}'
           nginx['listen_port'] = '80'
           nginx['listen_https'] = false
           gitlab_rails['gitlab_shell_ssh_port'] = 2222
@@ -21,14 +21,14 @@ services:
         - "traefik.enable=true"
 
         # routers http
-        - "traefik.http.routers.gitlab.rule=Host(`git.${DOMAIN_URL}`)"
+        - "traefik.http.routers.gitlab.rule=Host(`${GITLAB_URL}`)"
         - "traefik.http.routers.gitlab.entrypoints=https"
         - "traefik.http.routers.gitlab.tls=true"
         - "traefik.http.routers.gitlab.tls.certresolver=certbot"
         - "traefik.http.routers.gitlab.middlewares=default-headers@file"
 
         ## redirect
-        - "traefik.http.routers.gitlab-redirect.rule=Host(`git.${DOMAIN_URL}`)"
+        - "traefik.http.routers.gitlab-redirect.rule=Host(`${GITLAB_URL}`)"
         - "traefik.http.routers.gitlab-redirect.entrypoints=http"
         - "traefik.http.routers.gitlab-redirect.middlewares=https-only@file"
 

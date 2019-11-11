@@ -46,11 +46,11 @@ services:
   
       # routers 
       - "traefik.http.routers.dashboard.middlewares=admin-auth@file,https-only@file"
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN_URL}`)"
+      - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_URL}`)"
       - "traefik.http.routers.dashboard.entrypoints=https"
       - "traefik.http.routers.dashboard.tls.certresolver=certbot"
 
-      - "traefik.http.routers.dash-redirect.rule=Host(`traefik.${DOMAIN_URL}`)"
+      - "traefik.http.routers.dash-redirect.rule=Host(`${TRAEFIK_URL}`)"
       - "traefik.http.routers.dash-redirect.entrypoints=http"
       - "traefik.http.routers.dash-redirect.middlewares=https-only@file"
 

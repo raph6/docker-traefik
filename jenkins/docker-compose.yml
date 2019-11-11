@@ -3,6 +3,7 @@ version: '3'
 services:
 
   jenkins:
+    container_name: jenkins
     image: jenkins/jenkins:alpine
     ports:
       - "50000:50000"
@@ -12,12 +13,12 @@ services:
     labels:
       - "traefik.enable=true"
 
-      - "traefik.http.routers.jenkins.rule=Host(`jenkins.${DOMAIN_URL}`)"
+      - "traefik.http.routers.jenkins.rule=Host(`${JENKINS_URL}`)"
       - "traefik.http.routers.jenkins.entrypoints=https"
       - "traefik.http.routers.jenkins.tls.certresolver=certbot"
       - "traefik.http.routers.jenkins.middlewares=default-headers@file"
 
-      - "traefik.http.routers.jenkins-http.rule=Host(`jenkins.${DOMAIN_URL}`)"
+      - "traefik.http.routers.jenkins-http.rule=Host(`${JENKINS_URL}`)"
       - "traefik.http.routers.jenkins-http.entrypoints=http"
       - "traefik.http.routers.jenkins-http.middlewares=https-only@file"
 
