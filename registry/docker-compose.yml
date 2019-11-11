@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  registry:
+    container_name: registry
+    restart: always
+    image: registry:2
+    environment:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:443
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      - registry:/var/lib/registry
+      - ./auth:/auth
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.registry.rule=Host(`${REGISTRY_URL}`)"
+      - "traefik.http.routers.registry.entrypoints=https"
+      - "traefik.http.routers.registry.tls.certresolver=certbot"
+
+      - "traefik.http.routers.http_registry.rule=Host(`${REGISTRY_URL}`)"
+      - "traefik.http.routers.http_registry.entrypoints=http"
+      - "traefik.http.routers.http_registry.middlewares=https-only@file"
+      
+      - "traefik.http.services.registry.loadbalancer.server.port=443"
+
+
+volumes:
+  registry:
+
+networks:
+  traefik:
+    external:
+      name: traefik_proxy
+

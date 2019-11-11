@@ -53,10 +53,36 @@ GITLAB_URL=gitlab.yourdomain.tld docker-compose up -d
 
 Vous devez ajouter la variable d'environnement `JENKINS_URL` avant le docker-compose up -d
 
-Rendez vous dans le dossier de jenkins
+Rendez vous dans le dossier _jenkins_ contenant le _docker-compose.yml_
 ```
 JENKINS_URL=jenkins.yourdomain.tld docker-compose up -d
 ```
+
+
+### Lancer un Docker Registry
+
+#### Pré-requis
+- Créer un fichier htpasswd pour les utilisateurs de votre Docker Registry
+```
+(registry folder)
+htpasswd -B -C 12 -c auth/htpasswd *your-username*
+```
+
+Vous devez ajouter la variable d'environnement `REGISTRY_URL` avant le docker-compose up -d
+
+Rendez vous dans le dossier _registry_ contenant le _docker-compose.yml_
+```
+REGISTRY_URL=registry.yourdomain.tld docker-compose up -d
+```
+
+Vous pouvez maintenant utiliser votre registry de cette manière
+```
+docker login registry.yourdomain.tld
+
+docker push registry.yourdomain.tld/my_image:my_version
+
+docker pull registry.yourdomain.tld/my_image:my_version
+
 
 
 ### Informations
