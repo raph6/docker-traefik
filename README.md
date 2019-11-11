@@ -6,21 +6,17 @@ Veillez a bien avoir installé Docker et docker-compose
 
 Vous devez configurer votre zone DNS en pointant vers l'ip de votre serveur
 
-#### Traefik
+#### Configuration de Traefik
 
-Rendez vous dans le dossier `traefik`
-```
-cd traefik
-```
+```shell
+git clone https://github.com/raph6/compose-traefik-server.git
+cd compose-traefik-server
 
-Le fichier `acme.json` est le fichier où sont stocker les certificats ACME
-```
-touch traefik/acme/acme.json
-chmod 600 traefik/acme/acme.json
-```
+# create acme.json
+touch traefik/traefik/acme/acme.json
+chmod 600 traefik/traefik/acme/acme.json
 
-Création d'un fichier basicAuth pour vos administrateurs
-```
+# create your admin user file
 htpasswd -B -C 12 -c traefik/basicAuth/.admin *your-username*
 ```
 
