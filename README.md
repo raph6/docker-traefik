@@ -30,11 +30,11 @@ htpasswd -B -C 12 -c traefik/basicAuth/.admin *your-username*
 
 
 ### Lancer Traefik
-Vous devez ajouter les variables d'environnements `EMAIL` et `DOMAIN_URL` avant le docker-compose up -d
+Vous devez ajouter les variables d'environnements `EMAIL` et `TRAEFIK_URL` avant le docker-compose up -d
 
 Rendez vous dans le dossier de traefik
 ```
-EMAIL=your@email.com DOMAIN_URL=yourdomain.tld docker-compose up -d
+EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
 ```
 
 
@@ -42,20 +42,20 @@ EMAIL=your@email.com DOMAIN_URL=yourdomain.tld docker-compose up -d
 
 Attention, par défaut Gitlab stockera ses fichiers systèmes dans _/srv/gitlab/_
 
-Vous devez ajouter la variable d'environnement `DOMAIN_URL` avant le docker-compose up -d
+Vous devez ajouter la variable d'environnement `GITLAB_URL` avant le docker-compose up -d
 
 Rendez vous dans le dossier de gitlab
 ```
-DOMAIN_URL=yourdomain.tld docker-compose up -d
+GITLAB_URL=gitlab.yourdomain.tld docker-compose up -d
 ```
 
 ### Lancer Jenkins
 
-Vous devez ajouter la variable d'environnement `DOMAIN_URL` avant le docker-compose up -d
+Vous devez ajouter la variable d'environnement `JENKINS_URL` avant le docker-compose up -d
 
 Rendez vous dans le dossier de jenkins
 ```
-DOMAIN_URL=yourdomain.tld docker-compose up -d
+JENKINS_URL=jenkins.yourdomain.tld docker-compose up -d
 ```
 
 
