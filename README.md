@@ -1,6 +1,6 @@
 ### Getting started
 
-Make sure you have Docker and docker-compose installed and 
+Make sure you have Docker and docker-compose installed and your DNS records set up
 
 ```shell
 git clone https://github.com/raph6/compose-traefik-server.git
