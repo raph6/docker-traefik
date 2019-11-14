@@ -1,17 +1,14 @@
-### Pré-requis
+### Getting started
 
-Veillez a bien avoir installé Docker et docker-compose
-
-#### Zone DNS
-
-Vous devez configurer votre zone DNS en pointant vers l'ip de votre serveur
-
-#### Configuration de Traefik
+Make sure you have Docker and docker-compose installed and 
 
 ```shell
 git clone https://github.com/raph6/compose-traefik-server.git
 cd compose-traefik-server
 
+###
+# Setup Traefik 
+###
 # create acme.json
 touch traefik/traefik/acme/acme.json
 chmod 600 traefik/traefik/acme/acme.json
@@ -20,61 +17,57 @@ chmod 600 traefik/traefik/acme/acme.json
 htpasswd -B -C 12 -c traefik/basicAuth/.admin *your-username*
 ```
 
-`htpasswd` est disponible dans le packet `apache2-utils`
+`htpasswd` can be found in the package `apache2-utils`
 
-`sudo apt-get install apache2-utils`
-
-#### Configuration de Registry
+`sudo apt-get install apache2-utils` (adjust for your distribution)
 
 ```shell
+###
+# Setup registry
+###
 # create your user file
 htpasswd -B -C 12 -c registry/auth/htpasswd *your-username*
 ```
 
-### Lancer Traefik
-Vous devez ajouter les variables d'environnements `EMAIL` et `TRAEFIK_URL` avant le docker-compose up -d
+### Run Traefik
+Add the environment variables `EMAIL` and `TRAEFIK_URL`
 
-Rendez vous dans le dossier de traefik
 ```shell
-# in folder traefik
+# traefik/
 EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
 ```
 
+### Run Gitlab
 
-### Lancer Gitlab
+Warning, gitlab data is located in _/srv/gitlab/_
 
-Attention, par défaut Gitlab stockera ses fichiers systèmes dans _/srv/gitlab/_
+Add the environment variable `GITLAB_URL`
 
-Vous devez ajouter la variable d'environnement `GITLAB_URL` avant le docker-compose up -d
-
-Rendez vous dans le dossier de gitlab
 ```shell
-# in folder gitlab
+# gitlab/
 GITLAB_URL=gitlab.yourdomain.tld docker-compose up -d
 ```
 
-### Lancer Jenkins
+### Run Jenkins
 
-Vous devez ajouter la variable d'environnement `JENKINS_URL` avant le docker-compose up -d
+Add the environment variable `JENKINS_URL`
 
-Rendez vous dans le dossier _jenkins_ contenant le _docker-compose.yml_
 ```shell
-# in folder jenkins
+# jenkins/
 JENKINS_URL=jenkins.yourdomain.tld docker-compose up -d
 ```
 
 
-### Lancer un Docker Registry
+### Run Docker Registry
 
-Vous devez ajouter la variable d'environnement `REGISTRY_URL` avant le docker-compose up -d
+Add the environment variable `REGISTRY_URL`
 
-Rendez vous dans le dossier _registry_ contenant le _docker-compose.yml_
 ```shell
-# in folder registry
+# registry/
 REGISTRY_URL=registry.yourdomain.tld docker-compose up -d
 ```
 
-Vous pouvez maintenant utiliser votre registry de cette manière
+Now your can use your docker registry like this
 ```shell
 docker login registry.yourdomain.tld
 
@@ -85,4 +78,4 @@ docker pull registry.yourdomain.tld/my_image:my_version
 
 
 ### Informations
-HTTPS est activé par défaut, vos certificats sont générés et renouvelés automatiquement
+HTTPS is enabled by default, your certificates are generated and automatically renewed
