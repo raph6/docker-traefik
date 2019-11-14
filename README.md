@@ -30,7 +30,7 @@ htpasswd -B -C 12 -c registry/auth/htpasswd *your-username*
 ```
 
 ### Run Traefik
-Add the environment variables `EMAIL` and `TRAEFIK_URL`
+Add the environment variables `EMAIL` (for Certbot) and `TRAEFIK_URL`
 
 ```shell
 # traefik/
