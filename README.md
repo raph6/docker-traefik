@@ -1,89 +1,81 @@
-### Pré-requis
+### Getting started
 
-Veillez a bien avoir installé Docker et docker-compose
+Make sure you have Docker and docker-compose installed and your DNS records set up
 
-#### Zone DNS
+```shell
+git clone https://github.com/raph6/compose-traefik-server.git
+cd compose-traefik-server
 
-Vous devez configurer votre zone DNS en pointant vers l'ip de votre serveur
+###
+# Setup Traefik 
+###
+# create acme.json
+touch traefik/traefik/acme/acme.json
+chmod 600 traefik/traefik/acme/acme.json
 
-#### Traefik
-
-Rendez vous dans le dossier `traefik`
-```
-cd traefik
-```
-
-Le fichier `acme.json` est le fichier où sont stocker les certificats ACME
-```
-touch traefik/acme/acme.json
-chmod 600 traefik/acme/acme.json
-```
-
-Création d'un fichier basicAuth pour vos administrateurs
-```
+# create your admin user file
 htpasswd -B -C 12 -c traefik/basicAuth/.admin *your-username*
 ```
 
-`htpasswd` est disponible dans le packet `apache2-utils`
+`htpasswd` can be found in the package `apache2-utils`
 
-`sudo apt-get install apache2-utils`
+`sudo apt-get install apache2-utils` (adjust for your distribution)
 
-
-### Lancer Traefik
-Vous devez ajouter les variables d'environnements `EMAIL` et `TRAEFIK_URL` avant le docker-compose up -d
-
-Rendez vous dans le dossier de traefik
+```shell
+###
+# Setup registry
+###
+# create your user file
+htpasswd -B -C 12 -c registry/auth/htpasswd *your-username*
 ```
+
+### Run Traefik
+Add the environment variables `EMAIL` (for Certbot) and `TRAEFIK_URL`
+
+```shell
+# traefik/
 EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
 ```
 
+### Run Gitlab
 
-### Lancer Gitlab
+Warning, gitlab data is located in _/srv/gitlab/_
 
-Attention, par défaut Gitlab stockera ses fichiers systèmes dans _/srv/gitlab/_
+Add the environment variable `GITLAB_URL`
 
-Vous devez ajouter la variable d'environnement `GITLAB_URL` avant le docker-compose up -d
-
-Rendez vous dans le dossier de gitlab
-```
+```shell
+# gitlab/
 GITLAB_URL=gitlab.yourdomain.tld docker-compose up -d
 ```
 
-### Lancer Jenkins
+### Run Jenkins
 
-Vous devez ajouter la variable d'environnement `JENKINS_URL` avant le docker-compose up -d
+Add the environment variable `JENKINS_URL`
 
-Rendez vous dans le dossier _jenkins_ contenant le _docker-compose.yml_
-```
+```shell
+# jenkins/
 JENKINS_URL=jenkins.yourdomain.tld docker-compose up -d
 ```
 
 
-### Lancer un Docker Registry
+### Run Docker Registry
 
-#### Pré-requis
-- Créer un fichier htpasswd pour les utilisateurs de votre Docker Registry
-```
-(registry folder)
-htpasswd -B -C 12 -c auth/htpasswd *your-username*
-```
+Add the environment variable `REGISTRY_URL`
 
-Vous devez ajouter la variable d'environnement `REGISTRY_URL` avant le docker-compose up -d
-
-Rendez vous dans le dossier _registry_ contenant le _docker-compose.yml_
-```
+```shell
+# registry/
 REGISTRY_URL=registry.yourdomain.tld docker-compose up -d
 ```
 
-Vous pouvez maintenant utiliser votre registry de cette manière
-```
+Now your can use your docker registry like this
+```shell
 docker login registry.yourdomain.tld
 
 docker push registry.yourdomain.tld/my_image:my_version
 
 docker pull registry.yourdomain.tld/my_image:my_version
-
+```
 
 
 ### Informations
-HTTPS est activé par défaut, vos certificats sont générés et renouvelés automatiquement
+HTTPS is enabled by default, your certificates are generated and automatically renewed
