@@ -1,0 +1,45 @@
+version: '3'
+services:
+  miniflux:
+    image: miniflux/miniflux:latest
+    expose:
+      - "8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - RUN_MIGRATIONS=1
+      - DATABASE_URL=postgres://${MINIFLUX_POSTGRES_USER}:${MINIFLUX_POSTGRES_PASSWORD}@db/miniflux?sslmode=disable
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.rssfeed.middlewares=default-headers@file"
+      - "traefik.http.routers.rssfeed.rule=Host(`${MINIFLUX_URL}`)"
+      - "traefik.http.routers.rssfeed.entrypoints=https"
+      - "traefik.http.routers.rssfeed.tls.certresolver=certbot"
+
+      - "traefik.http.services.rssfeed.loadbalancer.server.port=8080"
+    networks:
+      - traefik
+
+  db:
+    image: postgres:10.1
+    environment:
+      - POSTGRES_USER=${MINIFLUX_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${MINIFLUX_POSTGRES_PASSWORD}
+    volumes:
+      - miniflux-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 10s
+      start_period: 30s
+    networks:
+      - traefik
+
+volumes:
+    miniflux-db:
+
+networks:
+  traefik:
+    external:
+      name: traefik_proxy
