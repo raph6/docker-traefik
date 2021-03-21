@@ -16,7 +16,7 @@ services:
       - "traefik.http.routers.jenkins.rule=Host(`${JENKINS_URL}`)"
       - "traefik.http.routers.jenkins.entrypoints=https"
       - "traefik.http.routers.jenkins.tls.certresolver=certbot"
-      - "traefik.http.routers.jenkins.middlewares=default-headers@file"
+      #- "traefik.http.routers.jenkins.middlewares=default-headers@file"
 
       - "traefik.http.services.jenkins.loadbalancer.server.port=8080"
     networks:
