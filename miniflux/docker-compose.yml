@@ -1,6 +1,7 @@
 version: '3'
 services:
   miniflux:
+    container_name: miniflux
     image: miniflux/miniflux:latest
     expose:
       - "8080"
@@ -23,6 +24,7 @@ services:
       - traefik
 
   db:
+    container_name: miniflux_db
     image: postgres:10.1
     environment:
       - POSTGRES_USER=${MINIFLUX_POSTGRES_USER}
