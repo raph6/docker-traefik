@@ -3,7 +3,7 @@
 Make sure you have Docker and docker-compose installed and your DNS records set up
 
 ```shell
-git clone https://github.com/raph6/compose-traefik-server.git
+git clone https://github.com/raph6/docker-traefik.git
 cd compose-traefik-server
 
 ###
