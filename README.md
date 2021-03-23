@@ -23,7 +23,7 @@ htpasswd -B -C 14 -c traefik/basicAuth/.admin *your-username*
 
 `sudo apt-get install apache2-utils` (adjust for your distribution)
 
-### Run Traefik
+## Run Traefik
 In Traefik folder:
 Make `.env` file on the same model as `.env.exemple`
 ```shell
@@ -46,5 +46,7 @@ Feel free to ask for another project
 - [Docker Registry](registry)
 
 
-### Informations
+## Informations
 HTTPS is enabled by default, your certificates are generated and automatically renewed
+
+PR are welcome
