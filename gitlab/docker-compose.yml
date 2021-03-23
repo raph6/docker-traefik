@@ -20,17 +20,12 @@ services:
       labels:
         - "traefik.enable=true"
 
-        # routers http
+        # routers
         - "traefik.http.routers.gitlab.rule=Host(`${GITLAB_URL}`)"
         - "traefik.http.routers.gitlab.entrypoints=https"
         - "traefik.http.routers.gitlab.tls=true"
         - "traefik.http.routers.gitlab.tls.certresolver=certbot"
         - "traefik.http.routers.gitlab.middlewares=default-headers@file"
-
-        ## redirect
-        - "traefik.http.routers.gitlab-redirect.rule=Host(`${GITLAB_URL}`)"
-        - "traefik.http.routers.gitlab-redirect.entrypoints=http"
-        - "traefik.http.routers.gitlab-redirect.middlewares=https-only@file"
 
         #- services http
         - "traefik.http.services.gitlab.loadbalancer.server.port=80"
