@@ -40,10 +40,10 @@ EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
 
 Feel free to ask for another project
 
-- [Gitlab](tree/master/gitlab)
-- [Jenkins](tree/master/jenkins)
-- [Miniflux](tree/master/miniflux)
-- [Docker Registry](tree/master/registry)
+- [Gitlab](../blob/master/gitlab)
+- [Jenkins](../blob/master/jenkins)
+- [Miniflux](../blob/master/miniflux)
+- [Docker Registry](../blob/master/registry)
 
 
 ### Informations
