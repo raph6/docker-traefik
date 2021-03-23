@@ -1,80 +1,49 @@
-### Getting started
+## Getting started
 
 Make sure you have Docker and docker-compose installed and your DNS records set up
 
 ```shell
 git clone https://github.com/raph6/docker-traefik.git
-cd compose-traefik-server
+cd docker-traefik
+```
 
-###
-# Setup Traefik 
-###
+## Setup Traefik
+```shell
+cd traefik
+
 # create acme.json
-touch traefik/traefik/acme/acme.json
-chmod 600 traefik/traefik/acme/acme.json
+touch traefik/acme/acme.json
+chmod 600 traefik/acme/acme.json
 
 # create your admin user file
-htpasswd -B -C 12 -c traefik/basicAuth/.admin *your-username*
+htpasswd -B -C 14 -c traefik/basicAuth/.admin *your-username*
 ```
 
 `htpasswd` can be found in the package `apache2-utils`
 
 `sudo apt-get install apache2-utils` (adjust for your distribution)
 
+### Run Traefik
+In Traefik folder:
+Make `.env` file on the same model as `.env.exemple`
 ```shell
-###
-# Setup registry
-###
-# create your user file
-htpasswd -B -C 12 -c registry/auth/htpasswd *your-username*
+docker-compose up -d
 ```
 
-### Run Traefik
-Add the environment variables `EMAIL` (for Certbot) and `TRAEFIK_URL`
+or
 
 ```shell
-# traefik/
 EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
 ```
 
-### Run Gitlab
+## Projects you can use
 
-Warning, gitlab data is located in _/srv/gitlab/_
+Feel free to ask for another project
 
-Add the environment variable `GITLAB_URL`
-
-```shell
-# gitlab/
-GITLAB_URL=gitlab.yourdomain.tld docker-compose up -d
-```
-
-### Run Jenkins
-
-Add the environment variable `JENKINS_URL`
-
-```shell
-# jenkins/
-JENKINS_URL=jenkins.yourdomain.tld docker-compose up -d
-```
-
-
-### Run Docker Registry
-
-Add the environment variable `REGISTRY_URL`
-
-```shell
-# registry/
-REGISTRY_URL=registry.yourdomain.tld docker-compose up -d
-```
-
-Now your can use your docker registry like this
-```shell
-docker login registry.yourdomain.tld
-
-docker push registry.yourdomain.tld/my_image:my_version
-
-docker pull registry.yourdomain.tld/my_image:my_version
-```
+- [Gitlab](tree/master/gitlab)
+- [Jenkins](tree/master/jenkins)
+- [Miniflux](tree/master/miniflux)
+- [Docker Registry](tree/master/registry)
 
 
 ### Informations
