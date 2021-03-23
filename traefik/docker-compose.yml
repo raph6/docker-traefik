@@ -16,8 +16,9 @@ services:
       - "--global.checknewversion=true"
       - "--global.sendanonymoususage=false"
       
-      - "--api.insecure=true"
-      - "--api.debug=true"
+      - "--api.dashboard=true"
+      # - "--api.insecure=true"
+      # - "--api.debug=true"
 
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
@@ -45,18 +46,17 @@ services:
     labels:
       - "traefik.enable=true"
 
+      # redirect all http to https
       - traefik.http.routers.to-https.rule=HostRegexp(`{host:.+}`)
       - traefik.http.routers.to-https.entrypoints=http
       - traefik.http.routers.to-https.middlewares=https-only@file
 
-      # routers 
-      - "traefik.http.routers.dashboard.middlewares=admin-auth@file,https-only@file"
+      # traefik dashboard 
+      - "traefik.http.routers.dashboard.middlewares=admin-auth@file"
       - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_URL}`)"
       - "traefik.http.routers.dashboard.entrypoints=https"
       - "traefik.http.routers.dashboard.tls.certresolver=certbot"
-
-      # services
-      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+      - "traefik.http.routers.dashboard.service=api@internal"
 
 networks:
   proxy:
