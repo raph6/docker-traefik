@@ -20,13 +20,8 @@ services:
       - "traefik.http.routers.registry.rule=Host(`${REGISTRY_URL}`)"
       - "traefik.http.routers.registry.entrypoints=https"
       - "traefik.http.routers.registry.tls.certresolver=certbot"
-
-      - "traefik.http.routers.http_registry.rule=Host(`${REGISTRY_URL}`)"
-      - "traefik.http.routers.http_registry.entrypoints=http"
-      - "traefik.http.routers.http_registry.middlewares=https-only@file"
       
       - "traefik.http.services.registry.loadbalancer.server.port=443"
-
 
 volumes:
   registry:
