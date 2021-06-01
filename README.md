@@ -36,7 +36,7 @@ or
 EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
 ```
 
-## Projects you can use
+## Services you can use
 
 Feel free to ask for another project
 
