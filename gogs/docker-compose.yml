@@ -1,0 +1,55 @@
+version: '3'
+services:
+    gogs:
+      image: gogs/gogs
+      container_name: gogs
+      ports:
+        - "10022:22"
+      depends_on:
+        postgres:
+          condition: service_healthy
+      volumes:
+        - gogs_server_data:/data
+      labels:
+        - "traefik.enable=true"
+
+        - "traefik.http.routers.gogs.middlewares=default-headers@file"
+        - "traefik.http.routers.gogs.rule=Host(`${GOGS_URL}`)"
+        - "traefik.http.routers.gogs.entrypoints=https"
+        - "traefik.http.routers.gogs.tls.certresolver=certbot"
+
+        - "traefik.http.services.gogs.loadbalancer.server.port=3000"
+      networks:
+        - gogs
+        - traefik
+
+    postgres:
+      container_name: gogs_db
+      image: postgres:13-alpine
+      restart: always
+      environment:
+        - POSTGRES_USER=${GOGS_POSTGRES_USER}
+        - POSTGRES_PASSWORD=${GOGS_POSTGRES_PASSWORD}
+        - POSTGRES_DB=gogs
+      volumes:
+        - gogs_db_data:/var/lib/postgresql/data
+      healthcheck:
+        test: ["CMD", "pg_isready", "-U", "gogs"]
+        interval: 10s
+        start_period: 30s
+      networks:
+        - gogs
+
+volumes:
+  gogs_server_data:
+    driver: local
+  gogs_db_data:
+    driver: local
+
+
+networks:
+  gogs:
+  traefik:
+    external:
+      name: traefik_proxy
+
