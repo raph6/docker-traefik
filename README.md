@@ -44,6 +44,7 @@ Feel free to ask for another project
 - [Jenkins](jenkins)
 - [Miniflux](miniflux)
 - [Docker Registry](registry)
+- [Gogs](gogs)
 
 
 ## Informations
