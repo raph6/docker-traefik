@@ -1,6 +1,7 @@
 version: '3'
 services:
   miniflux:
+    restart: always
     container_name: miniflux
     image: miniflux/miniflux:latest
     expose:
@@ -24,6 +25,7 @@ services:
       - traefik
 
   db:
+    restart: always
     container_name: miniflux_db
     image: postgres:10.1
     environment:
