@@ -27,7 +27,7 @@ services:
   db:
     restart: always
     container_name: miniflux_db
-    image: postgres:10.1
+    image: postgres:10
     environment:
       - POSTGRES_USER=${MINIFLUX_POSTGRES_USER}
       - POSTGRES_PASSWORD=${MINIFLUX_POSTGRES_PASSWORD}
