@@ -4,10 +4,13 @@ services:
   reverse-proxy:
     container_name: traefik
     image: traefik:v2.5
+    restart: "always"
     command: 
       - "--log.level=INFO"
 
       - "--accesslog=true"
+
+      - "--ping"
 
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
@@ -40,9 +43,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik:/etc/traefik
-    restart: "always"
-    networks:
-      - proxy
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 30
     labels:
       - "traefik.enable=true"
 
@@ -57,6 +62,8 @@ services:
       - "traefik.http.routers.dashboard.entrypoints=https"
       - "traefik.http.routers.dashboard.tls.certresolver=certbot"
       - "traefik.http.routers.dashboard.service=api@internal"
+    networks:
+      - proxy
 
 networks:
   proxy:
