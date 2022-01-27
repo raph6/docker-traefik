@@ -3,7 +3,7 @@ version: '3'
 services:
   reverse-proxy:
     container_name: traefik
-    image: traefik:v2.5
+    image: traefik:v2.6
     restart: "always"
     command: 
       - "--log.level=INFO"
