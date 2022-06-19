@@ -1,0 +1,14 @@
+entryPoints:
+  metrics:
+    address: ":9797"
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
+    addEntryPointsLabels: true
+    addServicesLabels: true

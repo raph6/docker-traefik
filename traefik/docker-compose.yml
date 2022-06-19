@@ -26,7 +26,7 @@ services:
       - "--entrypoints.http.address=:80"
       - "--entrypoints.https.address=:443"
 
-      - "--providers.file.filename=/etc/traefik/config/middlewares.yml"
+      - "--providers.file.directory=/etc/traefik/config"
       
       - "--certificatesresolvers.certbot=true"
       - "--certificatesresolvers.certbot.acme.email=${EMAIL}"
@@ -40,6 +40,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "9797:9797"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik:/etc/traefik
