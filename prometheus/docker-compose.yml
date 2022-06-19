@@ -1,0 +1,35 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus:v2.36.1
+    restart: unless-stopped
+    container_name: prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus:/prometheus
+    command:
+      - "--web.route-prefix=/"
+      - "--web.external-url=https://${PROMETHEUS_URL}"
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.prometheus.middlewares=default-headers@file"
+      - "traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_URL}`)"
+      - "traefik.http.routers.prometheus.entrypoints=https"
+      - "traefik.http.routers.prometheus.tls.certresolver=certbot"
+
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+
+volumes:
+  prometheus:
+
+networks:
+  traefik:
+    external:
+      name: traefik_proxy
