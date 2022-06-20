@@ -1,0 +1,27 @@
+version: '3'
+services:
+  portainer:
+    image: portainer/portainer-ce:2.13.1-alpine
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./portainer-data:/data
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.portainer.middlewares=default-headers@file"
+      - "traefik.http.routers.portainer.tls.certresolver=certbot"
+      - "traefik.http.routers.portainer.entrypoints=https"
+      - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_URL}`)"
+
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+networks:
+  traefik:
+    external:
+      name: traefik_proxy
