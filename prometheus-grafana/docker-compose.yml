@@ -32,10 +32,10 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.middlewares=default-headers@file,admin-auth@file"
-      - "traefik.http.routers.prometheus.rule=Host(`${GRAFANA_URL}`)"
-      - "traefik.http.routers.prometheus.entrypoints=https"
-      - "traefik.http.routers.prometheus.tls.certresolver=certbot"
+      - "traefik.http.routers.grafana.middlewares=default-headers@file,admin-auth@file"
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_URL}`)"
+      - "traefik.http.routers.grafana.entrypoints=https"
+      - "traefik.http.routers.grafana.tls.certresolver=certbot"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
 volumes:
