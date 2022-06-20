@@ -45,6 +45,7 @@ Feel free to ask for another project
 - [Miniflux](miniflux)
 - [Docker Registry](registry)
 - [Gogs](gogs)
+- [Prometheus-Grafana](prometheus-grafana) (based on https://github.com/axinorm/traefik-monitoring)
 
 
 ## Informations

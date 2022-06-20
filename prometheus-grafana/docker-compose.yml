@@ -16,18 +16,31 @@ services:
       - "--web.console.templates=/usr/share/prometheus/consoles"
     networks:
       - traefik
+
+  grafana:
+    image: grafana/grafana:6.6.1
+    restart: unless-stopped
+    container_name: grafana
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    env_file:
+      - grafana.env
+    depends_on:
+      - prometheus
+    networks:
+      - traefik
     labels:
       - "traefik.enable=true"
-
       - "traefik.http.routers.prometheus.middlewares=default-headers@file,admin-auth@file"
-      - "traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_URL}`)"
+      - "traefik.http.routers.prometheus.rule=Host(`${GRAFANA_URL}`)"
       - "traefik.http.routers.prometheus.entrypoints=https"
       - "traefik.http.routers.prometheus.tls.certresolver=certbot"
-
-      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
 volumes:
   prometheus:
+  grafana:
 
 networks:
   traefik:
