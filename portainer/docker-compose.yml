@@ -1,7 +1,7 @@
 version: '3'
 services:
   portainer:
-    image: portainer/portainer-ce:2.13.1-alpine
+    image: portainer/portainer-ce:alpine
     container_name: portainer
     restart: unless-stopped
     security_opt:
