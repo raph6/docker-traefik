@@ -48,8 +48,6 @@ volumes:
 
 
 networks:
-  gogs:
   traefik:
-    external:
-      name: traefik_proxy
-
+    name: traefik_proxy
+    external: true
