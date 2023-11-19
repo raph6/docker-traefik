@@ -2,6 +2,7 @@ version: '3'
 services:
     gogs:
       image: gogs/gogs
+      restart: always
       container_name: gogs
       ports:
         - "10022:22"
