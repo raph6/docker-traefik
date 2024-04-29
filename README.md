@@ -53,6 +53,8 @@ Feel free to ask for another project
 - [Gogs](gogs)
 - [Prometheus-Grafana](prometheus-grafana) (based on https://github.com/axinorm/traefik-monitoring)
 
+- [Golang project example](golang-project-example)
+
 
 ## Informations
 HTTPS is enabled by default, your certificates are generated and automatically renewed

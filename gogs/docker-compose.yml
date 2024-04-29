@@ -1,6 +1,7 @@
 services:
     gogs:
       image: gogs/gogs
+      restart: always
       container_name: gogs
       ports:
         - "10022:22"
@@ -50,3 +51,4 @@ networks:
   traefik:
     name: traefik_proxy
     external: true
+  gogs:
