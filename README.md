@@ -27,13 +27,13 @@ htpasswd -B -C 14 -c traefik/basicAuth/.admin *your-username*
 In Traefik folder:
 Make `.env` file on the same model as `.env.exemple`
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 or
 
 ```shell
-EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker-compose up -d
+EMAIL=your@email.com TRAEFIK_URL=traefik.yourdomain.tld docker compose up -d
 ```
 
 ## Services you can use
