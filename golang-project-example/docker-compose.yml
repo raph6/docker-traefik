@@ -1,4 +1,3 @@
-version: '3'
 services:
   goproject:
     container_name: goproject

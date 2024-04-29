@@ -6,7 +6,7 @@ Make sure you have configured Traefik
 In folder:
 Make `.env` file on the same model as `.env.exemple`
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 ### To install gogs

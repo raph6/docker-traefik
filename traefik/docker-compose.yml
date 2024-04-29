@@ -1,9 +1,7 @@
-version: '3'
-
 services:
   reverse-proxy:
     container_name: traefik
-    image: traefik:v2.11
+    image: traefik:v3.0
     restart: "always"
     command: 
       - "--log.level=INFO"
@@ -38,9 +36,8 @@ services:
 
       #- "--certificatesResolvers.certbot.acme.tlsChallenge=true"
     ports:
-      - "80:80"
-      - "443:443"
-      - "9797:9797"
+      - "80:80" # http
+      - "443:443" # https
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik:/etc/traefik

@@ -12,13 +12,13 @@ htpasswd -B -C 14 -c auth/htpasswd *your-username*
 In folder:
 Make `.env` file on the same model as `.env.exemple`
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 or
 
 ```shell
-REGISTRY_URL=registry.yourdomain.tld docker-compose up -d
+REGISTRY_URL=registry.yourdomain.tld docker compose up -d
 ```
 
 ### Informations
