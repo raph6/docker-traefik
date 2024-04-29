@@ -1,3 +1,9 @@
+# Traefik Server with Docker (Traefik 3 available)
+
+Traefik 3 is now available, on branch **master**.
+
+Traefik 2 is still usable from [this branch](https://github.com/raph6/docker-traefik/tree/traefik-2)
+
 ## Getting started
 
 Make sure you have Docker and docker-compose installed and your DNS records set up
