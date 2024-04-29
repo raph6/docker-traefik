@@ -1,0 +1,56 @@
+services:
+  goproject:
+    container_name: goproject
+    restart: always
+    build: .
+    env_file:
+      - .env
+    environment:
+      GIN_MODE: release
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_URL: database
+    depends_on:
+      database:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.goproject.middlewares=default-headers@file"
+      - "traefik.http.routers.goproject.rule=Host(`YOUR-DOMAIN`)"
+      - "traefik.http.routers.goproject.entrypoints=https"
+      - "traefik.http.routers.goproject.tls.certresolver=certbot"
+
+      - "traefik.http.services.goproject.loadbalancer.server.port=8080"
+    networks:
+      - traefik
+
+  database:
+    env_file:
+      - .env
+    container_name: database
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: database
+    networks:
+      - traefik
+    volumes:
+      - database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}", "-e", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+    database:
+
+networks:
+  traefik:
+    name: traefik_proxy
+    external: true
