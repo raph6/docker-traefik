@@ -2,7 +2,7 @@
 
 Traefik 3 is now available, on branch **master**.
 
-Traefik 2 is still usable from [this branch](https://github.com/raph6/docker-traefik/tree/traefik-2)
+Traefik 2 is still usable from branch [traefik-2](https://github.com/raph6/docker-traefik/tree/traefik-2)
 
 ## Getting started
 
