@@ -50,7 +50,7 @@ services:
       - "traefik.enable=true"
 
       # redirect all http to https
-      - traefik.http.routers.to-https.rule=HostRegexp(`{host:.+}`)
+      - traefik.http.routers.to-https.rule=HostRegexp(`.+`)
       - traefik.http.routers.to-https.entrypoints=http
       - traefik.http.routers.to-https.middlewares=https-only@file
 
